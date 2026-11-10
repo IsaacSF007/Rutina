@@ -1,0 +1,15 @@
+RUTINA - app instalable
+
+Archivos (suben todos juntos, sin carpetas):
+index.html, sw.js, manifest.webmanifest, icon-180.png, icon-192.png, icon-512.png,
+bsd-700.woff2, bsd-800.woff2, figtree-400.woff2, figtree-600.woff2, figtree-700.woff2
+
+Publicar en GitHub Pages:
+1. Crea una cuenta en github.com.
+2. New repository > nombre: rutina > Public > Create repository.
+3. "uploading an existing file" > elige todos los archivos de arriba > Commit changes.
+4. Settings > Pages > Branch: main, carpeta / (root) > Save.
+5. Espera 1 a 2 minutos. La direccion es https://TU-USUARIO.github.io/rutina/
+6. Abrela en Safari > Compartir > Agregar a inicio.
+
+Para actualizar la app despues: sube los archivos nuevos y cambia "rutina-v1" por "rutina-v2" en sw.js.
