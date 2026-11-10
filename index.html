@@ -346,6 +346,10 @@ details.lift{padding:0}
 .seebtn{display:inline-flex;align-items:center;gap:6px;min-height:46px;padding:0 14px;border-radius:12px;background:var(--raised);color:var(--ink);font-weight:700;font-size:14px;text-decoration:none}
 .seebtn svg{width:18px;height:18px;color:var(--accent)}
 .seebtn:active{transform:scale(.96)}
+
+.vid{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:12px;border:1px solid var(--line);color:var(--ink);text-decoration:none;font-weight:700;font-size:15px}
+.vid svg{width:20px;height:20px;color:var(--accent)}
+.vid:active{transform:scale(.97)}
 </style>
 </head>
 <body>
@@ -704,6 +708,7 @@ function card(p, n){
   h += '<div class="see"><span class="musc"><span class="k">Trabaja</span>'+ex.m+'</span><a class="seebtn" href="https://www.youtube.com/results?search_query='+qq+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.5v13l11-6.5z"/></svg>Video</a><a class="seebtn" href="https://www.google.com/search?tbm=isch&q='+encodeURIComponent(ex.q+" exercise")+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><rect x="3.5" y="4.5" width="17" height="15" rx="2.5"/><circle cx="9" cy="10" r="1.8"/><path d="M20 16l-5-5-8 8"/></svg>Imagen</a></div>';
   var topen = techOpen[id]==null ? !prev : techOpen[id];
   h += '<details class="techd" data-tech="'+id+'"'+(topen?" open":"")+'><summary>Técnica</summary><div class="tech"><div><span class="k">Cómo hacerlo</span>'+ex.how+'</div><div><span class="k bad">Error común</span>'+ex.err+'</div><div><span class="k cue">Imagina</span>'+ex.cue+'</div>'+(ex.alt?'<div class="alt"><span class="k">'+ex.altK+'</span>'+ex.alt+'</div>':"")+'</div></details>';
+  if(ex.eq!=="cardio") h += '<a class="vid" href="https://www.youtube.com/results?search_query='+encodeURIComponent((ex.q||ex.n)+" técnica correcta")+'" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg>Ver cómo se hace</a>';
   return h+'</div></article>';
 }
 function viewHoy(){
