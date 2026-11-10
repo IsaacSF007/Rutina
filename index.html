@@ -278,9 +278,71 @@ button,summary,.lab{-webkit-user-select:none;user-select:none;-webkit-touch-call
 .setting.col{flex-direction:column;align-items:stretch}
 .setting .prow{margin-top:4px}
 .lab{display:grid;place-items:center;cursor:pointer}
+
+/* v4: pulido de interfaz */
+html{min-height:calc(100% + env(safe-area-inset-top))}
+.scrim{position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top);background:var(--bg);z-index:7}
+button{transition:transform .08s ease,background-color .15s ease,border-color .15s ease}
+button:active{transform:scale(.96)}
+.app{gap:14px}
+h1{font-size:44px}
+.sub{margin-top:6px}
+.week{gap:5px}
+.day{position:relative;padding:10px 0 8px;border-radius:14px}
+.day .d{font-size:24px}
+.day .t{font-size:8.5px;letter-spacing:0;white-space:nowrap}
+.day.off{background:transparent;border-style:dashed}
+.day.off .d{color:var(--muted)}
+.day.today{border-color:var(--accent)}
+.day.did::after{content:"";position:absolute;top:6px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--good)}
+.day[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);border-style:solid}
+.day[aria-pressed="true"] .d{color:var(--bg)}
+.segs i{height:5px}
+.brief{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.brief>div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+.brief b{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.brief span{font-size:13.5px;line-height:1.3}
+.donecard{background:var(--good);color:#06130c;border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.donecard b{font-family:var(--display);font-size:30px;line-height:1;text-transform:uppercase}
+.donecard span{font-size:14.5px}
+.donecard .btn{background:#06130c;color:#fff;margin-top:6px}
+.card{border-radius:18px;transition:border-color .15s ease}
+.card.open{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.card.done:not(.open){opacity:.72}
+.card.done.open{border-color:var(--good);box-shadow:0 0 0 1px var(--good)}
+.cname{font-size:23px}
+.lastw{color:var(--ink);font-weight:700}
+.count{min-width:48px;height:48px;border-radius:24px}
+.plan{background:transparent;border:1px solid var(--line);padding:12px}
+.plan .go{font-size:15.5px}
+.cbody details.techd{background:var(--raised);border:0;border-radius:12px;padding:0 12px}
+.cbody details.techd summary{font-family:var(--body);font-size:14px;font-weight:700;text-transform:none;letter-spacing:0;min-height:48px}
+.cbody details.techd .tech{padding-bottom:12px}
+details{border-radius:16px;padding:0 14px}
+summary{list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:56px;cursor:pointer}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-family:var(--body);font-weight:500;font-size:22px;color:var(--muted)}
+details[open]>summary::after{content:"\2013"}
+details>ul,details>p{margin:0 0 14px}
+details.lift summary::after{content:none}
+details.lift{padding:0}
+.wd{font:inherit;color:inherit;min-height:66px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border-radius:14px}
+.wd .s{font-size:9.5px}
+.wd.next{box-shadow:0 0 0 1px var(--accent)}
+.bkrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+.bkrow .btn{font-size:15px;padding:12px 8px;min-height:52px}
+.box{border-radius:18px}
+.tabs{padding:4px 8px max(6px, calc(env(safe-area-inset-bottom) - 12px));background:color-mix(in srgb, var(--surface) 88%, transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.tab{min-height:50px;gap:2px}
+.tab svg{width:25px;height:25px}
+.timer{bottom:calc(60px + max(6px, calc(env(safe-area-inset-bottom) - 12px)))}
+.tin{border-radius:20px;padding:14px 16px}
+.tin .clock{font-size:46px}
+.app{padding-bottom:calc(200px + env(safe-area-inset-bottom))}
 </style>
 </head>
 <body>
+<div class="scrim" aria-hidden="true"></div>
 <div class="app" id="view"></div>
 
 <div class="timer" id="timer" hidden>
@@ -424,7 +486,7 @@ var DAYS = [
     notes:["Hoy no se entrena.","Si te toca, pésate y mídete la cintura en ayunas y anótalo en Progreso.","Mañana arrancas la semana con hombros y brazos."] },
   { key:1, short:"L", name:"Lunes", tag:"Brazos", title:"Hombros y brazos", time:"55 a 65 min",
     ex:[ it("press_hombro_maq",3,10), it("lateral_maq",3,15), it("pecdeck_rev",3,15), it("curl_maq",3,12), it("triceps_cuerda",3,12), it("triceps_cabeza",2,12), it("plancha",2,40), it("cardio_post",1,0) ] },
-  { key:2, short:"M", name:"Martes", tag:"Descanso", rest:true, title:"Descanso",
+  { key:2, short:"M", name:"Martes", tag:"Libre", rest:true, title:"Descanso",
     notes:["Hoy el cuerpo construye lo que trabajaste ayer.","Mañana toca espalda, que es donde más concentración necesitas.","Las porciones de proteína y la creatina van igual que cualquier día."] },
   { key:3, short:"X", name:"Miércoles", tag:"Pull", title:"Pull: espalda y bíceps", time:"60 a 70 min",
     ex:[ it("jalon_recto",2,15,{act:true}), it("jalon_pecho",3,10), it("remo_polea",3,10), it("remo_apoyo",3,10), it("jalon_neutro",2,12), it("curl_barra",3,10), it("martillo",2,10), it("cardio_post",1,0) ] },
@@ -432,7 +494,7 @@ var DAYS = [
     ex:[ it("press_pecho_maq",3,10), it("press_incl",3,10), it("press_hombro_maq",2,10), it("lateral_maq",3,15), it("pecdeck",2,12), it("triceps_cuerda",3,12), it("cardio_post",1,0) ] },
   { key:5, short:"V", name:"Viernes", tag:"Ligero", title:"Cardio y puntos débiles", time:"50 a 55 min", light:true,
     ex:[ it("cardio_largo",1,0), it("lateral_maq",3,15), it("jalon_recto",3,15), it("crunch",3,12) ] },
-  { key:6, short:"S", name:"Sábado", tag:"Piernas", title:"Piernas", time:"65 a 75 min", legs:true,
+  { key:6, short:"S", name:"Sábado", tag:"Pierna", title:"Piernas", time:"65 a 75 min", legs:true,
     ex:[ it("prensa_pie",3,10), it("prensa_sentada",3,10), it("ext_cuad",2,12), it("curl_femoral",3,12), it("hip_thrust",3,12), it("pantorrilla",3,15), it("abs_maq",2,12,{rest:90}), it("cardio_post",1,0) ] }
 ];
 var ORDER = [1,2,3,4,5,6,0], TRAIN = [1,3,4,5,6];
@@ -601,13 +663,13 @@ function effort(p, i){
 }
 
 /* ---------- Vista: Hoy ---------- */
-var tab = "hoy", selected = todayKey, openEx = null, draft = {};
+var tab = "hoy", selected = todayKey, openEx = null, draft = {}, techOpen = {};
 function firstOpen(){ var pl = plan(selected); for(var i=0;i<pl.length;i++) if(!isDone(pl[i])) return pl[i].id; return null; }
 var CHECK = '<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5l4 4 8-9"/></svg>';
 function weekStrip(){
   return '<nav class="week" aria-label="Días de la semana">'+ORDER.map(function(k){
-    var d=byKey(k);
-    return '<button type="button" class="day'+(k===todayKey?" today":"")+'" data-act="day" data-k="'+k+'" aria-pressed="'+(k===selected)+'" aria-label="'+d.name+", "+d.tag+(k===todayKey?", hoy":"")+'"><span class="d">'+d.short+'</span><span class="t">'+d.tag+'</span></button>';
+    var d=byKey(k), did = !d.rest && sessionOn(weekDate(k));
+    return '<button type="button" class="day'+(k===todayKey?" today":"")+(did?" did":"")+(d.rest?" off":"")+'" data-act="day" data-k="'+k+'" aria-pressed="'+(k===selected)+'" aria-label="'+d.name+", "+d.tag+(k===todayKey?", hoy":"")+'"><span class="d">'+d.short+'</span><span class="t">'+d.tag+'</span></button>';
   }).join("")+'</nav>';
 }
 function setRow(p, i, entry, prev){
@@ -622,6 +684,7 @@ function setRow(p, i, entry, prev){
 function card(p, n){
   var id = p.id, ex = p.ex, entry = todayEntry(id), prev = prevEntry(id), done = isDone(p), open = openEx===id;
   var dose = ex.eq==="cardio" ? ex.range+" min · inclinación "+ex.ci+" · velocidad "+ex.cv : p.sets+" × "+p.reps+(ex.time?" s":"")+" · descanso "+mmss(p.rest);
+  if(prev && ex.eq!=="cardio" && !ex.time && !open) dose += ' · <b class="lastw">'+fmt(best(prev, ex))+" "+state.unit+'</b>';
   var h = '<article class="card'+(open?" open":"")+(done?" done":"")+'"><button type="button" class="chead" data-act="open" data-id="'+id+'" aria-expanded="'+open+'">'
     +'<span class="idx">'+(p.act?"0":n)+'</span><span><span class="cname">'+ex.n+'</span><span class="cmeta"><span class="badge '+ex.eq+'">'+(p.act?"Activación":EQ[ex.eq])+'</span>'+(p.plus?'<span class="badge plus">+1 serie</span>':"")+dose+'</span></span>'
     +'<span class="count">'+(done?CHECK:doneSets(id)+"/"+p.sets)+'</span></button>';
@@ -629,9 +692,9 @@ function card(p, n){
   var sg = suggest(p, prev), ef = effort(p);
   h += '<div class="cbody"><div class="plan"><span class="k">La vez pasada'+(prev?" · "+dlabel(prev.d):"")+'</span><span>'+(prev ? describe(prev, ex) : "Todavía no hay registro")+'</span><span class="k" style="margin-top:4px">Hoy</span><span class="go '+sg.cls+'">'+sg.t+'</span>'+(ef?'<span class="ef">'+ef+'</span>':"")+'</div>';
   h += '<div class="sets">'; for(var i=0;i<p.sets;i++) h += setRow(p, i, entry, prev); h += '</div>';
-  if(ex.eq!=="cardio") h += '<div class="hint">Si hiciste lo que dice en gris, toca el check y listo. Si no, escribe el número real.</div>';
-  h += '<div class="tech"><div><span class="k">Cómo hacerlo</span>'+ex.how+'</div><div><span class="k bad">Error común</span>'+ex.err+'</div><div><span class="k cue">Imagina</span>'+ex.cue+'</div></div>';
-  if(ex.alt) h += '<div class="alt"><span class="k">'+ex.altK+'</span>'+ex.alt+'</div>';
+  if(ex.eq!=="cardio" && !prev) h += '<div class="hint">Si hiciste lo que dice en gris, toca el check y listo. Si no, escribe el número real.</div>';
+  var topen = techOpen[id]==null ? !prev : techOpen[id];
+  h += '<details class="techd" data-tech="'+id+'"'+(topen?" open":"")+'><summary>Técnica</summary><div class="tech"><div><span class="k">Cómo hacerlo</span>'+ex.how+'</div><div><span class="k bad">Error común</span>'+ex.err+'</div><div><span class="k cue">Imagina</span>'+ex.cue+'</div>'+(ex.alt?'<div class="alt"><span class="k">'+ex.altK+'</span>'+ex.alt+'</div>':"")+'</div></details>';
   return h+'</div></article>';
 }
 function viewHoy(){
@@ -645,8 +708,10 @@ function viewHoy(){
   h += '<div class="sub">'+pl.length+" bloques · "+d.time+" · "+count+" de "+pl.length+" hechos</div></header>"+weekStrip();
   h += '<div class="segs" aria-hidden="true">'+pl.map(function(p){ return '<i class="'+(isDone(p)?"on":"")+'"></i>'; }).join("")+'</div>';
   if(!isToday) h += '<div class="hint">Estás viendo '+d.name.toLowerCase()+'. Si entrenas esta rutina hoy, lo que marques se guarda con la fecha de hoy.</div>';
-  h += '<div class="phase"><b>'+(PHASE2?"Fase 2 · desde el 16 nov":"Fase 1 · hasta el 15 nov")+'</b>'+(d.light ? "Día ligero: nada cerca del fallo. Es para sumar pasos y trabajar lo que más te falta." : PHASE2 ? "Una serie más en los 2 primeros ejercicios. La última serie de cada ejercicio va a 1 repetición del fallo." : "Deja 2 a 3 repeticiones en el tanque. Estás aprendiendo el movimiento, no probando tu máximo.")+'</div>';
-  if(!d.light) h += '<div class="focus"><b>Calentamiento</b>5 min de caminadora a 3 % y 5 km/h, y 1 serie ligera del primer ejercicio.</div>';
+  var b1 = d.light ? ["Día ligero","Nada cerca del fallo"] : PHASE2 ? ["Fase 2","Última serie a 1 del fallo"] : ["Fase 1 · hasta 15 nov","Deja 2–3 reps en el tanque"];
+  var b2 = d.light ? ["Orden","Cardio primero, después lo demás"] : ["Calienta","5 min a 3 % y 5 km/h + 1 serie ligera"];
+  h += '<div class="brief"><div><b>'+b1[0]+'</b><span>'+b1[1]+'</span></div><div><b>'+b2[0]+'</b><span>'+b2[1]+'</span></div></div>';
+  if(count === pl.length) h += '<div class="donecard"><b>Sesión completa</b><span>Buen trabajo. Lo que sigue es la comida: proteína y creatina.</span><button type="button" class="btn" data-act="go" data-tab="comida">Marcar porciones</button></div>';
   return h+'<div class="list">'+pl.map(function(p,i){ var n = pl[0].act ? i : i+1; return card(p, n); }).join("")+'</div>';
 }
 
@@ -670,15 +735,16 @@ function lineChart(pts, f, label){
     +pts.map(function(p,i){ return '<circle class="pt" r="'+(i===pts.length-1?4:2.5)+'" cx="'+X(i).toFixed(1)+'" cy="'+Y(p[f]).toFixed(1)+'"/>'; }).join("")
     +'<text x="'+l+'" y="'+(H-6)+'">'+dlabel(pts[0].d)+'</text><text x="'+(W-r)+'" y="'+(H-6)+'" text-anchor="end">'+dlabel(pts[pts.length-1].d)+'</text></svg>';
 }
+function weekDate(k){ return dkey(addDays(addDays(NOW, -((NOW.getDay()+6)%7)), (k+6)%7)); }
 function sessionOn(date){ var c=0; Object.keys(state.log).forEach(function(id){ (state.log[id]||[]).forEach(function(e){ if(e.d===date && real(e).length) c++; }); }); return c>=2; }
 function viewProgreso(){
   var h = '<header><div class="eyebrow">Progreso</div><h1>Lo que va cambiando</h1></header>';
   var monday = addDays(NOW, -((NOW.getDay()+6)%7)), doneN = 0;
   var dots = TRAIN.map(function(k){
     var on = sessionOn(dkey(addDays(monday, (k+6)%7))); if(on) doneN++;
-    return '<div class="wd'+(on?" done":(k===todayKey?" next":""))+'"><div class="d">'+byKey(k).short+'</div><div class="s">'+(on?"Hecho":(k===todayKey?"Hoy":byKey(k).tag))+'</div></div>';
+    return '<button type="button" class="wd'+(on?" done":(k===todayKey?" next":""))+'" data-act="goday" data-k="'+k+'" aria-label="Ver '+byKey(k).name+'"><span class="d">'+byKey(k).short+'</span><span class="s">'+(on?"Hecho":(k===todayKey?"Hoy":byKey(k).tag))+'</span></button>';
   }).join("");
-  h += '<section class="sec"><div class="sechead"><h2>Esta semana</h2><span class="hint">'+doneN+' de 5 sesiones</span></div><div class="weekdots">'+dots+'</div></section>';
+  h += '<section class="sec"><div class="sechead"><h2>Esta semana</h2><span class="hint">'+doneN+' de 5 · toca un día para verlo</span></div><div class="weekdots">'+dots+'</div></section>';
 
   var body = state.body, last = body[body.length-1], first = body[0], due = !last || daysSince(last.d) >= 7;
   h += '<section class="sec"><div class="sechead"><h2>Peso y cintura</h2><span class="hint">1 vez por semana, en ayunas</span></div><div class="box">';
@@ -731,7 +797,7 @@ function viewGuia(){
   h += '<section class="sec"><h2>Ajustes</h2><div class="box"><div class="setting"><span>Unidad de peso</span><span class="seg"><button type="button" data-act="unit" data-u="lb" aria-pressed="'+(state.unit==="lb")+'">lb</button><button type="button" data-act="unit" data-u="kg" aria-pressed="'+(state.unit==="kg")+'">kg</button></span></div>'
     +'<div class="setting"><span class="sync '+(sync==="cloud"?"cloud":"")+'" id="syncline"><i></i><span>'+syncText()+'</span></span></div>'
     +'<div class="setting"><span class="sync '+(wakeState==="on"?"cloud":"")+'" id="wakeline"><i></i><span>'+wakeText()+'</span></span></div>'
-    +'<div class="setting col"><span><b>Respaldo</b><br><span class="hint" id="bkmsg">'+backupText()+'</span><br><span class="hint">Guárdalo en Archivos o iCloud cada par de semanas. Si borras la app o cambias de teléfono, lo restauras aquí.</span></span><span class="prow"><button type="button" class="btn grow" data-act="export">Guardar respaldo</button><label class="btn ghost lab">Restaurar<input type="file" id="imp" accept=".json,application/json" hidden></label></span></div></div></section>';
+    +'<div class="setting col"><span><b>Respaldo</b><br><span class="hint" id="bkmsg">'+backupText()+'</span><br><span class="hint">Guárdalo en Archivos o iCloud cada par de semanas. Si borras la app o cambias de teléfono, lo restauras aquí.</span></span><span class="bkrow"><button type="button" class="btn" data-act="export">Guardar respaldo</button><label class="btn ghost lab">Restaurar<input type="file" id="imp" accept=".json,application/json" hidden></label></span></div></div></section>';
   return h;
 }
 
@@ -749,12 +815,15 @@ view.addEventListener("input", function(e){
   var p = k.split("|"), key = p[0]+"|"+p[1]; (draft[key] = draft[key] || {})[p[2]] = e.target.value;
 });
 view.addEventListener("change", function(e){ if(e.target && e.target.id==="imp" && e.target.files && e.target.files[0]) importData(e.target.files[0]); });
+view.addEventListener("toggle", function(e){ var k = e.target.getAttribute && e.target.getAttribute("data-tech"); if(k) techOpen[k] = e.target.open; }, true);
 function val(id, i, f){ var el = document.getElementById("in-"+id+"-"+i+"-"+f); if(!el) return null; var v = num(el.value); return v==null ? num(el.placeholder) : v; }
 function fail(id, i, f){ var el = document.getElementById("in-"+id+"-"+i+"-"+f); if(el){ el.focus(); el.style.borderColor = "var(--accent)"; } }
 function planItem(id){ var pl = plan(selected); for(var i=0;i<pl.length;i++) if(pl[i].id===id) return pl[i]; return null; }
 view.addEventListener("click", function(e){
   var b = e.target.closest("[data-act]"); if(!b) return;
   var act = b.getAttribute("data-act"), id = b.getAttribute("data-id"), i = +b.getAttribute("data-i");
+  if(act==="goday"){ tab = "hoy"; selected = +b.getAttribute("data-k"); openEx = firstOpen(); draft = {}; render(); window.scrollTo(0,0); return; }
+  if(act==="go"){ tab = b.getAttribute("data-tab"); render(); window.scrollTo(0,0); return; }
   if(act==="day"){ selected = +b.getAttribute("data-k"); openEx = firstOpen(); draft = {}; render(); return; }
   if(act==="open"){ openEx = openEx===id ? null : id; render(); return; }
   if(act==="set"){

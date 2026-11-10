@@ -1,5 +1,5 @@
 /* Guarda la app en el teléfono para que abra sin internet. Sube el número de versión al cambiar archivos. */
-const V = "rutina-v1";
+const V = "rutina-v2";
 const FILES = ["./", "index.html", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png", "bsd-700.woff2", "bsd-800.woff2", "figtree-400.woff2", "figtree-600.woff2", "figtree-700.woff2"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(V).then(c => c.addAll(FILES)).then(() => self.skipWaiting())); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== V).map(k => caches.delete(k)))).then(() => self.clients.claim())); });
